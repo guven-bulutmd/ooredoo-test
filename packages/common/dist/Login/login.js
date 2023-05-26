@@ -5,8 +5,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var react_native_1 = require("react-native");
 var react_1 = __importDefault(require("react"));
-var App = function () {
+var login = function (props) {
     return (react_1.default.createElement(react_native_1.View, null,
-        react_1.default.createElement(react_native_1.Text, { style: { fontSize: 40, fontWeight: "600", color: "#333" } }, "ortak component")));
+        react_1.default.createElement(react_native_1.Text, null, "login")));
 };
-exports.default = App;
+exports.default = login;
