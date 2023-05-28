@@ -35,6 +35,9 @@ const stepThree = (props: Props) => {
   const [Email, onChangEmail] = useState("");
   const [Password, onChangPassword] = useState("");
   const [showPassword, setShowPassword] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isError, setIsError] = useState(false);
+  const [successMessage, setSuccessMessage] = useState("");
 
   const { inputValue, errors, setInputValue, validateInput, isValid } =
     useCustomValidation();
@@ -58,6 +61,46 @@ const stepThree = (props: Props) => {
     validateInput(e);
   };
 
+  const handleSubmit = async () => {
+    
+      console.log("İstek atıldı");
+      setIsLoading(true);
+      setIsError(false);
+
+      try {
+        const formData = {
+          serviceNumber: serviceNumberFinal,
+          qid: QidFinal,
+          email:Email,
+          password:Password
+        };
+
+        const response = await fetch("http://localhost:8080/registerCustomer", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        });
+
+        if (!response.ok) {
+          throw new Error("API request failed");
+        }
+        const url = `/accountCreated`;
+        if (Platform.OS !== "web") {
+          navigation.navigate("Congratulations");
+        } else {
+          window.location.href = url;
+        }
+        setSuccessMessage("Form submitted successfully!");
+      } catch (error) {
+        console.error(error);
+        setIsError(true);
+      } finally {
+        setIsLoading(false);
+      }
+    
+  };
   console.log("şifre", errors, "validate", isValid);
   return (
     <View style={{ padding: 24, display: "flex", flexDirection: "column" }}>
@@ -148,9 +191,7 @@ const stepThree = (props: Props) => {
         disabled={!isValid}
           ButtonName="Continue"
           setOnPress={() => {
-            Platform.OS !== "web"
-              ? navigation.navigate("Congratulations")
-              : (window.location.href = "/accountCreated");
+            handleSubmit()
           }}
         />
       </View>
