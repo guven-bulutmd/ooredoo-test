@@ -1,8 +1,16 @@
-import { View, Text, TouchableOpacity, TextInput, Platform } from "react-native";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  TextInput,
+  Platform,
+  ScrollView,
+} from "react-native";
 import React, { useState } from "react";
 import OoredooButton from "../components/ooredooButton";
 import RegisterHeadline from "../components/registerHeadline";
-import useCustomValidation from "../hooks/passwordValidation"
+import useCustomValidation from "../hooks/passwordValidation";
+import useCustomValidationQıd from "../hooks/qidValidation";
 
 type Props = { platform?: string; navigation?: any };
 
@@ -14,14 +22,28 @@ const stepThree = (props: Props) => {
   const [Password, onChangPassword] = useState("");
   const [showPassword, setShowPassword] = useState(true);
 
-  const { inputValue, errors, setInputValue, validateInput,isValid } = useCustomValidation();
+  const { inputValue, errors, setInputValue, validateInput, isValid } =
+    useCustomValidation();
+  const {
+    inputValue: inputValueQid,
+    errors: errorsQid,
+    setInputValue: setInputValueQid,
+    validateInput: validateInputQid,
+    isValid: isValidQid,
+  } = useCustomValidationQıd();
 
-  const handleChange = (e:any) => {
-    onChangPassword(e)
+  const handleChangeQıd = (e: any) => {
+    onChangID(e);
+    setInputValueQid(e);
+    validateInputQid(e);
+  };
+
+  const handleChange = (e: any) => {
+    onChangPassword(e);
     setInputValue(e);
     validateInput(e);
   };
-  console.log('şifre',errors,'validate',isValid)
+  console.log("şifre", errors, "validate", isValid);
   return (
     <View style={{ padding: 24, display: "flex", flexDirection: "column" }}>
       <RegisterHeadline
@@ -52,12 +74,14 @@ const stepThree = (props: Props) => {
             padding: 10,
             borderRadius: 10,
           }}
-          onChangeText={onChangID}
+          onChangeText={handleChangeQıd}
           placeholder="Qatar ID or Passport ID"
           value={ID}
           keyboardType="numeric"
         />
-
+        {errorsQid?.map((item: string, index: any) => {
+          return <Text style={{ color: "red" }}>{item}</Text>;
+        })}
         <TextInput
           style={{
             height: 50,
@@ -93,18 +117,16 @@ const stepThree = (props: Props) => {
           value={Password}
         />
       </View>
-      {errors?.map((item:string,index:any)=>{
-        return(
-          <Text style={{color:'red'}}>{item}</Text>
-        )
+      {errors?.map((item: string, index: any) => {
+        return <Text style={{ color: "red" }}>{item}</Text>;
       })}
       <View style={{ padding: 20 }}>
         <OoredooButton
           ButtonName="Continue"
           setOnPress={() => {
-            Platform.OS!=='web'
+            Platform.OS !== "web"
               ? navigation.navigate("Congratulations")
-              : (window.location.href = "/registerStepTwo");
+              : (window.location.href = "/accountCreated");
           }}
         />
       </View>

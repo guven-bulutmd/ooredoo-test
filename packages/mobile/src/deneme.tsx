@@ -1,111 +1,39 @@
 import {View, Text, TouchableOpacity, TextInput, Platform} from 'react-native';
 import React, {useState} from 'react';
 import RegisterHeadline from 'common/dist/components/registerHeadline';
-import OoredooButton from "common/dist/components/ooredooButton";
-import useCustomValidation from './hooks';
+import OoredooButton from 'common/dist/components/ooredooButton';
+import Button from 'common/dist/components/button';
 
-type Props = { platform?: string; navigation?: any };
+type Props = {platform?: string; navigation?: any};
 
 const deneme = (props: Props) => {
-  const [MobileNumber, onChangeMobileNumber] = React.useState("");
-  const [ID, onChangID] = React.useState("");
-  const [Email, onChangEmail] = useState("");
-  const [Password, onChangPassword] = useState("");
-  const [showPassword, setShowPassword] = useState(true);
+  
 
-  const { inputValue, errors, setInputValue, validateInput,isValid } = useCustomValidation();
-
-  const handleChange = (e:any) => {
-    onChangPassword(e)
-    setInputValue(e);
-    validateInput(e);
-  };
-  console.log('şifre',errors,'validate',isValid)
   return (
-    <View style={{ padding: 24, display: "flex", flexDirection: "column" }}>
-      <RegisterHeadline
-        title="You're nearly there"
-        subtitle="Ahmad, we need some information before completing your registration."
-      />
+    <View style={{padding: 24, display: 'flex', flexDirection: 'column'}}>
+      <Text style={{color:'#ED1C23',fontSize:24,textAlign:'center'}}>
+        ooredoo
+      </Text>
 
-      <View style={{ marginTop: 40, marginBottom: 20 }}>
-        <TextInput
-          style={{
-            height: 50,
-            margin: 12,
-            borderWidth: 1,
-            padding: 10,
-            borderRadius: 10,
+      <View
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          marginTop: 40,
+          alignItems: 'center',
+        }}>
+        <Button
+          style={{marginBottom: 20}}
+          buttonName={'Login'}
+           setOnPress={() => {
+            Platform.OS !=='web' ? navigation.navigate('Login'): window.location.href = '/login';
           }}
-          onChangeText={onChangeMobileNumber}
-          placeholder="Mobile Number"
-          value={MobileNumber}
-          keyboardType="numeric"
         />
-
-        <TextInput
-          style={{
-            height: 50,
-            margin: 12,
-            borderWidth: 1,
-            padding: 10,
-            borderRadius: 10,
+        <Button
+          buttonName={'Signup'}
+          setOnPress={() => {
+            Platform.OS !=='web' ? navigation.navigate('Register'): window.location.href = '/register';
           }}
-          onChangeText={onChangID}
-          placeholder="Qatar ID or Passport ID"
-          value={ID}
-          keyboardType="numeric"
-        />
-
-        <TextInput
-          style={{
-            height: 50,
-            margin: 12,
-            borderWidth: 1,
-            padding: 10,
-            borderRadius: 10,
-          }}
-          onChangeText={onChangEmail}
-          placeholder="Email Adress"
-          value={Email}
-        />
-
-        <TouchableOpacity
-          style={{ display: "flex", alignItems: "flex-end", width: 330 }}
-          onPress={() => {
-            setShowPassword(!showPassword);
-          }}
-        >
-          <Text>{showPassword ? "Show Password" : "Hide Password"}</Text>
-        </TouchableOpacity>
-        <TextInput
-          style={{
-            height: 50,
-            margin: 12,
-            borderWidth: 1,
-            padding: 10,
-            borderRadius: 10,
-          }}
-          secureTextEntry={showPassword}
-          onChangeText={handleChange}
-          placeholder="Password"
-          value={Password}
-        />
-      </View>
-      {errors?.map((item:string,index:any)=>{
-        return(
-          <Text style={{color:'red'}}>{item}</Text>
-        )
-      })}
-     
-      <View style={{ padding: 20 }}>
-        <OoredooButton
-          ButtonName="Continue"
-         /*  setOnPress={() => {
-            Platform.OS!=='web'
-              ? navigation.navigate("Congratulations")
-              : (window.location.href = "/registerStepTwo");
-          }} */
         />
       </View>
     </View>
