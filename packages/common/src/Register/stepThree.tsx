@@ -12,12 +12,26 @@ import RegisterHeadline from "../components/registerHeadline";
 import useCustomValidation from "../hooks/passwordValidation";
 import useCustomValidationQıd from "../hooks/qidValidation";
 
-type Props = { platform?: string; navigation?: any };
+type Props = { platform?: string; navigation?: any; useRoute?: any };
 
 const stepThree = (props: Props) => {
-  const { platform, navigation } = props;
-  const [MobileNumber, onChangeMobileNumber] = useState("");
-  const [ID, onChangID] = useState("");
+  const { platform, navigation, useRoute } = props;
+  let serviceNumberFinal: any, QidFinal: any;
+  if (Platform.OS !== "web") {
+    const route = useRoute();
+    const { serviceNumber, Qid } = route.params;
+    serviceNumberFinal = serviceNumber;
+    QidFinal = Qid;
+  } else {
+    const params = new URLSearchParams(window.location.search);
+    serviceNumberFinal = params.get("serviceNumber");
+    QidFinal = params.get("Qid");
+  }
+
+  const [MobileNumber, onChangeMobileNumber] = useState(
+    serviceNumberFinal ? serviceNumberFinal : ""
+  );
+  const [ID, onChangID] = useState(QidFinal ? QidFinal : "");
   const [Email, onChangEmail] = useState("");
   const [Password, onChangPassword] = useState("");
   const [showPassword, setShowPassword] = useState(true);
@@ -43,6 +57,7 @@ const stepThree = (props: Props) => {
     setInputValue(e);
     validateInput(e);
   };
+
   console.log("şifre", errors, "validate", isValid);
   return (
     <View style={{ padding: 24, display: "flex", flexDirection: "column" }}>
@@ -59,7 +74,11 @@ const stepThree = (props: Props) => {
             borderWidth: 1,
             padding: 10,
             borderRadius: 10,
+            backgroundColor:'#F0F0F0',
+            color:'#6D6D6D'
           }}
+          editable={false}
+          selectTextOnFocus={false}
           onChangeText={onChangeMobileNumber}
           placeholder="Mobile Number"
           value={MobileNumber}
@@ -73,7 +92,11 @@ const stepThree = (props: Props) => {
             borderWidth: 1,
             padding: 10,
             borderRadius: 10,
+            backgroundColor:'#F0F0F0',
+            color:'#6D6D6D'
           }}
+          editable={false}
+          selectTextOnFocus={false}
           onChangeText={handleChangeQıd}
           placeholder="Qatar ID or Passport ID"
           value={ID}
@@ -95,14 +118,6 @@ const stepThree = (props: Props) => {
           value={Email}
         />
 
-        <TouchableOpacity
-          style={{ display: "flex", alignItems: "flex-end", width: 330 }}
-          onPress={() => {
-            setShowPassword(!showPassword);
-          }}
-        >
-          <Text>{showPassword ? "Show Password" : "Hide Password"}</Text>
-        </TouchableOpacity>
         <TextInput
           style={{
             height: 50,
@@ -116,12 +131,21 @@ const stepThree = (props: Props) => {
           placeholder="Password"
           value={Password}
         />
+        <TouchableOpacity
+          style={{ display: "flex", alignItems: "flex-end", width: 330 }}
+          onPress={() => {
+            setShowPassword(!showPassword);
+          }}
+        >
+          <Text>{showPassword ? "Show Password" : "Hide Password"}</Text>
+        </TouchableOpacity>
       </View>
       {errors?.map((item: string, index: any) => {
         return <Text style={{ color: "red" }}>{item}</Text>;
       })}
       <View style={{ padding: 20 }}>
         <OoredooButton
+        disabled={!isValid}
           ButtonName="Continue"
           setOnPress={() => {
             Platform.OS !== "web"

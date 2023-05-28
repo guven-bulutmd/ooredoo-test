@@ -8,10 +8,10 @@ var useCustomValidationQıd = function () {
     var validateInput = function (value) {
         var validationErrors = [];
         if ((value === null || value === void 0 ? void 0 : value.length) !== 11) {
-            validationErrors.push('Girilen değer 11 karakter olmalıdır.');
+            validationErrors.push('QID must be 11 Digits');
         }
         if (!value.startsWith('2') && !value.startsWith('3')) {
-            validationErrors.push('Girilen değer 2 ya da 3 ile başlamalı.');
+            validationErrors.push('QID must start with either 2 or 3.');
         }
         if ((validationErrors === null || validationErrors === void 0 ? void 0 : validationErrors.length) === 0) {
             setIsValid(true);

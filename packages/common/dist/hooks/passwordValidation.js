@@ -8,19 +8,22 @@ var useCustomValidation = function () {
     var validateInput = function (value) {
         var validationErrors = [];
         if (value.length < 8 || value.length > 20) {
-            validationErrors.push("Girilen string 8 ile 20 karakter arasında olmalı.");
+            validationErrors.push("Be Between 8 and 20 characters.");
         }
         if (!/[A-Z]/.test(value)) {
-            validationErrors.push("Girilen string bir büyük harf içermelidir.");
+            validationErrors.push("Include at least one upper case letter");
+        }
+        if (!/\d+/.test(value)) {
+            validationErrors.push("Include at least one number");
         }
         if (!/[a-z]/.test(value)) {
-            validationErrors.push("Girilen string bir küçük harf içermelidir.");
+            validationErrors.push("Include at least one lower case letter.");
         }
         if (!/[!@#.%$]/.test(value)) {
-            validationErrors.push("Girilen string bir özel karakter içermelidir.");
+            validationErrors.push("Include at least one special character(!@#.%$)");
         }
         if (/\s/.test(value)) {
-            validationErrors.push("Girilen string boşluk içermemelidir.");
+            validationErrors.push("Doesn't include whitespace");
         }
         if ((validationErrors === null || validationErrors === void 0 ? void 0 : validationErrors.length) === 0) {
             setIsValid(true);

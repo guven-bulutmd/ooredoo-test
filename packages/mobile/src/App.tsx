@@ -2,7 +2,7 @@ import {View, Text, TouchableOpacity, TextInput} from 'react-native';
 import React from 'react';
 /* import RegisterHeadline from 'common/dist/components/registerHeadline'; */
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {NavigationContainer, useNavigation} from '@react-navigation/native';
+import {NavigationContainer, useNavigation,useRoute} from '@react-navigation/native';
 import Register from 'common/dist/Register/main';
 import StepOne from 'common/dist/Register/stepOne';
 import StepTwo from 'common/dist/Register/stepTwo';
@@ -29,11 +29,11 @@ const App = (props: Props) => {
   };
   const StepTwoPage = () => {
     const navigation = useNavigation();
-    return <StepTwo platform={'mobile'} navigation={navigation} />;
+    return <StepTwo platform={'mobile'} navigation={navigation} useRoute={useRoute}/>;
   };
   const StepThreePage = () => {
     const navigation = useNavigation();
-    return <StepThree platform={'mobile'} navigation={navigation} />;
+    return <StepThree platform={'mobile'} navigation={navigation} useRoute={useRoute}/>;
   };
   const AccountCreatedPage = () => {
     const navigation = useNavigation();

@@ -17,8 +17,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var react_native_1 = require("react-native");
 var react_1 = __importDefault(require("react"));
 var ooredooButton = function (props) {
-    var ButtonName = props.ButtonName, setOnPress = props.setOnPress, style = props.style;
-    return (react_1.default.createElement(react_native_1.TouchableOpacity, { onPress: setOnPress, style: __assign({ backgroundColor: "#ED1C23", width: 300, height: 52, borderRadius: 80, display: "flex", alignItems: "center", justifyContent: "center" }, style) },
+    var ButtonName = props.ButtonName, setOnPress = props.setOnPress, style = props.style, disabled = props.disabled;
+    return (react_1.default.createElement(react_native_1.TouchableOpacity, { onPress: setOnPress, disabled: disabled, style: __assign({ backgroundColor: disabled ? "gray" : "#ED1C23", width: 300, height: 52, borderRadius: 80, display: "flex", alignItems: "center", justifyContent: "center" }, style) },
         react_1.default.createElement(react_native_1.Text, { style: {
                 color: "#FDFDFD",
                 fontSize: 20,

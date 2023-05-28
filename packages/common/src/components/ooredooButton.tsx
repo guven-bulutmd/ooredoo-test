@@ -5,15 +5,17 @@ type Props = {
   ButtonName: string;
   setOnPress?: any;
   style?: any;
+  disabled?:boolean;
 };
 
 const ooredooButton = (props: Props) => {
-  const { ButtonName, setOnPress, style } = props;
+  const { ButtonName, setOnPress, style, disabled } = props;
   return (
     <TouchableOpacity
       onPress={setOnPress}
+      disabled={disabled}
       style={{
-        backgroundColor: "#ED1C23",
+        backgroundColor:disabled?"gray": "#ED1C23",
         width: 300,
         height: 52,
         borderRadius: 80,
