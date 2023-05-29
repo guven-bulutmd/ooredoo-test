@@ -67,7 +67,7 @@ var react_1 = __importStar(require("react"));
 var registerHeadline_1 = __importDefault(require("../components/registerHeadline"));
 var OTPInput_1 = __importDefault(require("../components/OTPInput"));
 var stepTwo = function (props) {
-    var platform = props.platform, navigation = props.navigation, useRoute = props.useRoute;
+    var navigation = props.navigation, useRoute = props.useRoute;
     var serviceNumberFinal, QidFinal;
     if (react_native_1.Platform.OS !== "web") {
         var route = useRoute();
@@ -107,6 +107,7 @@ var stepTwo = function (props) {
                                 method: "POST",
                                 headers: {
                                     "Content-Type": "application/json",
+                                    "Accept": "application/json",
                                 },
                                 body: JSON.stringify(formData),
                             })];
@@ -117,7 +118,7 @@ var stepTwo = function (props) {
                         }
                         url = "/registerStepThree?serviceNumber=".concat(serviceNumberFinal, "&Qid=").concat(QidFinal);
                         if (react_native_1.Platform.OS !== "web") {
-                            navigation.navigate("Step Three");
+                            navigation.navigate("Step Three", { serviceNumber: serviceNumberFinal, Qid: QidFinal });
                         }
                         else {
                             window.location.href = url;

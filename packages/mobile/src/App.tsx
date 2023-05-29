@@ -2,13 +2,18 @@ import {View, Text, TouchableOpacity, TextInput} from 'react-native';
 import React from 'react';
 /* import RegisterHeadline from 'common/dist/components/registerHeadline'; */
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {NavigationContainer, useNavigation,useRoute} from '@react-navigation/native';
+import {
+  NavigationContainer,
+  useNavigation,
+  useRoute,
+} from '@react-navigation/native';
 import Register from 'common/dist/Register/main';
 import StepOne from 'common/dist/Register/stepOne';
 import StepTwo from 'common/dist/Register/stepTwo';
 import StepThree from 'common/dist/Register/stepThree';
 import AccountCreated from 'common/dist/Register/accountCreated';
 import Login from 'common/dist/Login/login';
+import LoginServiceNumber from 'common/dist/Login/loginServiceNumber';
 import Main from 'common/dist/Main/main';
 
 type Props = {};
@@ -21,19 +26,19 @@ const App = (props: Props) => {
   };
   const RegisterPage = () => {
     const navigation = useNavigation();
-    return <Register platform={'mobile'} navigation={navigation} />;
+    return <Register navigation={navigation} />;
   };
   const StepOnePage = () => {
     const navigation = useNavigation();
-    return <StepOne platform={'mobile'} navigation={navigation} />;
+    return <StepOne navigation={navigation} useRoute={useRoute}/>;
   };
   const StepTwoPage = () => {
     const navigation = useNavigation();
-    return <StepTwo platform={'mobile'} navigation={navigation} useRoute={useRoute}/>;
+    return <StepTwo navigation={navigation} useRoute={useRoute} />;
   };
   const StepThreePage = () => {
     const navigation = useNavigation();
-    return <StepThree platform={'mobile'} navigation={navigation} useRoute={useRoute}/>;
+    return <StepThree navigation={navigation} useRoute={useRoute} />;
   };
   const AccountCreatedPage = () => {
     const navigation = useNavigation();
@@ -43,11 +48,14 @@ const App = (props: Props) => {
     const navigation = useNavigation();
     return <Login navigation={navigation} />;
   };
+  const LoginServiceNumberPage = () => {
+    return <LoginServiceNumber/>;
+  };
 
   return (
     <View style={{flex: 1}}>
       <NavigationContainer>
-        <Stack.Navigator screenOptions={{headerShown: true}}>
+        <Stack.Navigator screenOptions={{headerShown: true,headerBackButtonMenuEnabled:true}}>
           <Stack.Screen name="Welcome" component={MainPage} />
           <Stack.Screen name="Register" component={RegisterPage} />
           <Stack.Screen name="Step One" component={StepOnePage} />
@@ -55,6 +63,7 @@ const App = (props: Props) => {
           <Stack.Screen name="Step Three" component={StepThreePage} />
           <Stack.Screen name="Congratulations" component={AccountCreatedPage} />
           <Stack.Screen name="Login" component={LoginPage} />
+          <Stack.Screen name="Login Service Number" component={LoginServiceNumberPage} />
         </Stack.Navigator>
       </NavigationContainer>
     </View>

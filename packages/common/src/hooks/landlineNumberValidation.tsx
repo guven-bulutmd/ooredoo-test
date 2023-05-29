@@ -8,10 +8,10 @@ const useCustomValidationLN = () => {
     const validationErrors: string[] = [];
 
     if (value?.length !== 8) {
-      validationErrors.push("Mobile number must be 8 digits exactly");
+      validationErrors.push("Landline number must be 8 digits exactly");
     }
     if (!value.startsWith("4")) {
-      validationErrors.push("Mobile number needs to start with 3,5,6 or 7");
+      validationErrors.push("Landline number needs to start with 4");
     }
     if (validationErrors?.length === 0) {
       setIsValid(true);

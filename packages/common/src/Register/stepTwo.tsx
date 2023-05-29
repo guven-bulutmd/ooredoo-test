@@ -9,10 +9,10 @@ import React, { useEffect, useState } from "react";
 import RegisterHeadline from "../components/registerHeadline";
 import OTPInput from "../components/OTPInput";
 
-type Props = { platform?: string; navigation?: any; useRoute?: any };
+type Props = {navigation?: any; useRoute?: any };
 
 const stepTwo = (props: Props) => {
-  const { platform, navigation, useRoute } = props;
+  const { navigation, useRoute } = props;
   let serviceNumberFinal: any, QidFinal: any;
   if (Platform.OS !== "web") {
     const route = useRoute();
@@ -50,6 +50,7 @@ const stepTwo = (props: Props) => {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
+              "Accept": "application/json",
             },
             body: JSON.stringify(formData),
           });
@@ -59,7 +60,7 @@ const stepTwo = (props: Props) => {
           }
           const url = `/registerStepThree?serviceNumber=${serviceNumberFinal}&Qid=${QidFinal}`;
           if (Platform.OS !== "web") {
-            navigation.navigate("Step Three");
+            navigation.navigate("Step Three",{serviceNumber:serviceNumberFinal,Qid:QidFinal});
           } else {
             window.location.href = url;
           }

@@ -1,4 +1,10 @@
-import { View, Text, TextInput, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  Platform,
+} from "react-native";
 import React, { useState } from "react";
 import RegisterHeadline from "../components/registerHeadline";
 import OoredooButton from "../components/ooredooButton";
@@ -7,30 +13,30 @@ type Props = { navigation?: any };
 
 const login = (props: Props) => {
   const { navigation } = props;
+
   const [Email, onChangEmail] = useState("");
   const [Password, onChangPassword] = useState("");
   const [showPassword, setShowPassword] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");
-  
 
   const handleSubmit = async (e: any) => {
-
     e.preventDefault();
 
     setIsLoading(true);
     setIsError(false);
 
     try {
-        const formData = {
-            "password":Password,
-            "email":Email,
-          };
+      const formData = {
+        password: Password,
+        email: Email,
+      };
       const response = await fetch("http://localhost:8080/login/username", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          Accept: "application/json",
         },
         body: JSON.stringify(formData),
       });
@@ -40,10 +46,10 @@ const login = (props: Props) => {
       }
 
       setSuccessMessage("Form submitted successfully!");
-      
     } catch (error) {
       console.error(error);
       setIsError(true);
+      setSuccessMessage("");
     } finally {
       setIsLoading(false);
     }
@@ -56,6 +62,22 @@ const login = (props: Props) => {
       />
 
       <View style={{ marginTop: 40, marginBottom: 20 }}>
+        <Text style={{ display: "flex" }}>
+          Login with
+          <TouchableOpacity
+            onPress={() => {
+              const url = `/loginServiceNumber`;
+              if (Platform.OS !== "web") {
+                navigation.navigate("Login Service Number");
+              } else {
+                window.location.href = url;
+              }
+            }}
+          >
+            <Text style={{ color: "#ED1C23" }}>Service number</Text>
+          </TouchableOpacity>
+        </Text>
+
         <TextInput
           style={{
             height: 50,
@@ -91,16 +113,21 @@ const login = (props: Props) => {
         >
           <Text>{showPassword ? "Show Password" : "Hide Password"}</Text>
         </TouchableOpacity>
-        {isError && <Text style={{color:'red'}}>Error occurred while submitting the form.</Text>}
-        {successMessage && <Text style={{color:'green'}}>{successMessage}</Text>}
+        {isError && (
+          <Text style={{ color: "red" }}>
+            Error occurred while submitting the form.
+          </Text>
+        )}
+        {successMessage && (
+          <Text style={{ color: "green" }}>{successMessage}</Text>
+        )}
         <View style={{ padding: 20 }}>
           <OoredooButton
-            ButtonName={isLoading ? 'Submitting...' : 'Login'}
+            ButtonName={isLoading ? "Submitting..." : "Login"}
             disabled={isLoading}
-             setOnPress={handleSubmit}
+            setOnPress={handleSubmit}
           />
         </View>
-       
       </View>
     </View>
   );

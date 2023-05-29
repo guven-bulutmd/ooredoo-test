@@ -12,10 +12,10 @@ import RegisterHeadline from "../components/registerHeadline";
 import useCustomValidation from "../hooks/passwordValidation";
 import useCustomValidationQıd from "../hooks/qidValidation";
 
-type Props = { platform?: string; navigation?: any; useRoute?: any };
+type Props = { navigation?: any; useRoute?: any };
 
 const stepThree = (props: Props) => {
-  const { platform, navigation, useRoute } = props;
+  const { navigation, useRoute } = props;
   let serviceNumberFinal: any, QidFinal: any;
   if (Platform.OS !== "web") {
     const route = useRoute();
@@ -79,6 +79,7 @@ const stepThree = (props: Props) => {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
+            "Accept": "application/json",
           },
           body: JSON.stringify(formData),
         });

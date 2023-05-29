@@ -64,62 +64,28 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var react_native_1 = require("react-native");
 var react_1 = __importStar(require("react"));
-var ooredooButton_1 = __importDefault(require("../components/ooredooButton"));
 var registerHeadline_1 = __importDefault(require("../components/registerHeadline"));
-var passwordValidation_1 = __importDefault(require("../hooks/passwordValidation"));
-var qidValidation_1 = __importDefault(require("../hooks/qidValidation"));
-var stepThree = function (props) {
-    var navigation = props.navigation, useRoute = props.useRoute;
-    var serviceNumberFinal, QidFinal;
-    if (react_native_1.Platform.OS !== "web") {
-        var route = useRoute();
-        var _a = route.params, serviceNumber = _a.serviceNumber, Qid = _a.Qid;
-        serviceNumberFinal = serviceNumber;
-        QidFinal = Qid;
-    }
-    else {
-        var params = new URLSearchParams(window.location.search);
-        serviceNumberFinal = params.get("serviceNumber");
-        QidFinal = params.get("Qid");
-    }
-    var _b = (0, react_1.useState)(serviceNumberFinal ? serviceNumberFinal : ""), MobileNumber = _b[0], onChangeMobileNumber = _b[1];
-    var _c = (0, react_1.useState)(QidFinal ? QidFinal : ""), ID = _c[0], onChangID = _c[1];
-    var _d = (0, react_1.useState)(""), Email = _d[0], onChangEmail = _d[1];
-    var _e = (0, react_1.useState)(""), Password = _e[0], onChangPassword = _e[1];
-    var _f = (0, react_1.useState)(true), showPassword = _f[0], setShowPassword = _f[1];
-    var _g = (0, react_1.useState)(false), isLoading = _g[0], setIsLoading = _g[1];
-    var _h = (0, react_1.useState)(false), isError = _h[0], setIsError = _h[1];
-    var _j = (0, react_1.useState)(""), successMessage = _j[0], setSuccessMessage = _j[1];
-    var _k = (0, passwordValidation_1.default)(), inputValue = _k.inputValue, errors = _k.errors, setInputValue = _k.setInputValue, validateInput = _k.validateInput, isValid = _k.isValid;
-    var _l = (0, qidValidation_1.default)(), inputValueQid = _l.inputValue, errorsQid = _l.errors, setInputValueQid = _l.setInputValue, validateInputQid = _l.validateInput, isValidQid = _l.isValid;
-    var handleChangeQıd = function (e) {
-        onChangID(e);
-        setInputValueQid(e);
-        validateInputQid(e);
-    };
-    var handleChange = function (e) {
-        onChangPassword(e);
-        setInputValue(e);
-        validateInput(e);
-    };
-    var handleSubmit = function () { return __awaiter(void 0, void 0, void 0, function () {
-        var formData, response, url, error_1;
+var ooredooButton_1 = __importDefault(require("../components/ooredooButton"));
+var loginServiceNumber = function (props) {
+    var _a = (0, react_1.useState)(""), ServiceNumber = _a[0], onChangServiceNumber = _a[1];
+    var _b = (0, react_1.useState)(false), isLoading = _b[0], setIsLoading = _b[1];
+    var _c = (0, react_1.useState)(false), isError = _c[0], setIsError = _c[1];
+    var _d = (0, react_1.useState)(""), successMessage = _d[0], setSuccessMessage = _d[1];
+    var handleSubmit = function (e) { return __awaiter(void 0, void 0, void 0, function () {
+        var formData, response, error_1;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    console.log("İstek atıldı");
+                    e.preventDefault();
                     setIsLoading(true);
                     setIsError(false);
                     _a.label = 1;
                 case 1:
                     _a.trys.push([1, 3, 4, 5]);
                     formData = {
-                        serviceNumber: serviceNumberFinal,
-                        qid: QidFinal,
-                        email: Email,
-                        password: Password
+                        serviceNumber: ServiceNumber,
                     };
-                    return [4 /*yield*/, fetch("http://localhost:8080/registerCustomer", {
+                    return [4 /*yield*/, fetch("http://localhost:8080/login/serviceNumber", {
                             method: "POST",
                             headers: {
                                 "Content-Type": "application/json",
@@ -132,19 +98,13 @@ var stepThree = function (props) {
                     if (!response.ok) {
                         throw new Error("API request failed");
                     }
-                    url = "/accountCreated";
-                    if (react_native_1.Platform.OS !== "web") {
-                        navigation.navigate("Congratulations");
-                    }
-                    else {
-                        window.location.href = url;
-                    }
                     setSuccessMessage("Form submitted successfully!");
                     return [3 /*break*/, 5];
                 case 3:
                     error_1 = _a.sent();
                     console.error(error_1);
                     setIsError(true);
+                    setSuccessMessage("");
                     return [3 /*break*/, 5];
                 case 4:
                     setIsLoading(false);
@@ -153,9 +113,8 @@ var stepThree = function (props) {
             }
         });
     }); };
-    console.log("şifre", errors, "validate", isValid);
     return (react_1.default.createElement(react_native_1.View, { style: { padding: 24, display: "flex", flexDirection: "column" } },
-        react_1.default.createElement(registerHeadline_1.default, { title: "You're nearly there", subtitle: "Ahmad, we need some information before completing your registration." }),
+        react_1.default.createElement(registerHeadline_1.default, { title: "Login to my ooredoo", subtitle: "Login with service number" }),
         react_1.default.createElement(react_native_1.View, { style: { marginTop: 40, marginBottom: 20 } },
             react_1.default.createElement(react_native_1.TextInput, { style: {
                     height: 50,
@@ -163,45 +122,10 @@ var stepThree = function (props) {
                     borderWidth: 1,
                     padding: 10,
                     borderRadius: 10,
-                    backgroundColor: '#F0F0F0',
-                    color: '#6D6D6D'
-                }, editable: false, selectTextOnFocus: false, onChangeText: onChangeMobileNumber, placeholder: "Mobile Number", value: MobileNumber, keyboardType: "numeric" }),
-            react_1.default.createElement(react_native_1.TextInput, { style: {
-                    height: 50,
-                    margin: 12,
-                    borderWidth: 1,
-                    padding: 10,
-                    borderRadius: 10,
-                    backgroundColor: '#F0F0F0',
-                    color: '#6D6D6D'
-                }, editable: false, selectTextOnFocus: false, onChangeText: handleChangeQıd, placeholder: "Qatar ID or Passport ID", value: ID, keyboardType: "numeric" }), errorsQid === null || errorsQid === void 0 ? void 0 :
-            errorsQid.map(function (item, index) {
-                return react_1.default.createElement(react_native_1.Text, { style: { color: "red" } }, item);
-            }),
-            react_1.default.createElement(react_native_1.TextInput, { style: {
-                    height: 50,
-                    margin: 12,
-                    borderWidth: 1,
-                    padding: 10,
-                    borderRadius: 10,
-                }, onChangeText: onChangEmail, placeholder: "Email Adress", value: Email }),
-            react_1.default.createElement(react_native_1.TextInput, { style: {
-                    height: 50,
-                    margin: 12,
-                    borderWidth: 1,
-                    padding: 10,
-                    borderRadius: 10,
-                }, secureTextEntry: showPassword, onChangeText: handleChange, placeholder: "Password", value: Password }),
-            react_1.default.createElement(react_native_1.TouchableOpacity, { style: { display: "flex", alignItems: "flex-end", width: 330 }, onPress: function () {
-                    setShowPassword(!showPassword);
-                } },
-                react_1.default.createElement(react_native_1.Text, null, showPassword ? "Show Password" : "Hide Password"))), errors === null || errors === void 0 ? void 0 :
-        errors.map(function (item, index) {
-            return react_1.default.createElement(react_native_1.Text, { style: { color: "red" } }, item);
-        }),
-        react_1.default.createElement(react_native_1.View, { style: { padding: 20 } },
-            react_1.default.createElement(ooredooButton_1.default, { disabled: !isValid, ButtonName: "Continue", setOnPress: function () {
-                    handleSubmit();
-                } }))));
+                }, onChangeText: onChangServiceNumber, placeholder: "Service Number", value: ServiceNumber }),
+            isError && (react_1.default.createElement(react_native_1.Text, { style: { color: "red" } }, "Error occurred while submitting the form.")),
+            successMessage && (react_1.default.createElement(react_native_1.Text, { style: { color: "green" } }, successMessage)),
+            react_1.default.createElement(react_native_1.View, { style: { padding: 20 } },
+                react_1.default.createElement(ooredooButton_1.default, { ButtonName: isLoading ? "Submitting..." : "Login", disabled: isLoading, setOnPress: handleSubmit })))));
 };
-exports.default = stepThree;
+exports.default = loginServiceNumber;

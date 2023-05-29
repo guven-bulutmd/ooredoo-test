@@ -16,7 +16,7 @@ var accountCreated = function (props) {
                 color: "#333",
                 marginBottom: 40,
             } }, "Account Created"),
-        react_1.default.createElement(registerHeadline_1.default, { title: "Congratulations, Ahmad", subtitle: "please check the e-mail send to Ah*****@gmail.com,to confirm your registration" }),
+        react_1.default.createElement(registerHeadline_1.default, { title: "Congratulations", subtitle: "please check the e-mail confirm your registration" }),
         react_1.default.createElement(react_native_1.View, { style: { padding: 20, marginTop: 20 } },
             react_1.default.createElement(ooredooButton_1.default, { ButtonName: "Login", setOnPress: function () {
                     react_native_1.Platform.OS !== "web"

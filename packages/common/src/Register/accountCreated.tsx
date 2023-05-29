@@ -20,8 +20,8 @@ const accountCreated = (props: Props) => {
         Account Created
       </Text>
       <RegisterHeadline
-        title="Congratulations, Ahmad"
-        subtitle="please check the e-mail send to Ah*****@gmail.com,to confirm your registration"
+        title="Congratulations"
+        subtitle="please check the e-mail confirm your registration"
       />
 
       <View style={{ padding: 20, marginTop: 20 }}>

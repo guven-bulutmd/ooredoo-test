@@ -86,13 +86,14 @@ var login = function (props) {
                 case 1:
                     _a.trys.push([1, 3, 4, 5]);
                     formData = {
-                        "password": Password,
-                        "email": Email,
+                        password: Password,
+                        email: Email,
                     };
                     return [4 /*yield*/, fetch("http://localhost:8080/login/username", {
                             method: "POST",
                             headers: {
                                 "Content-Type": "application/json",
+                                Accept: "application/json",
                             },
                             body: JSON.stringify(formData),
                         })];
@@ -107,6 +108,7 @@ var login = function (props) {
                     error_1 = _a.sent();
                     console.error(error_1);
                     setIsError(true);
+                    setSuccessMessage("");
                     return [3 /*break*/, 5];
                 case 4:
                     setIsLoading(false);
@@ -118,6 +120,18 @@ var login = function (props) {
     return (react_1.default.createElement(react_native_1.View, { style: { padding: 24, display: "flex", flexDirection: "column" } },
         react_1.default.createElement(registerHeadline_1.default, { title: "Login to my ooredoo", subtitle: "Login with username and password" }),
         react_1.default.createElement(react_native_1.View, { style: { marginTop: 40, marginBottom: 20 } },
+            react_1.default.createElement(react_native_1.Text, { style: { display: "flex" } },
+                "Login with",
+                react_1.default.createElement(react_native_1.TouchableOpacity, { onPress: function () {
+                        var url = "/loginServiceNumber";
+                        if (react_native_1.Platform.OS !== "web") {
+                            navigation.navigate("Login Service Number");
+                        }
+                        else {
+                            window.location.href = url;
+                        }
+                    } },
+                    react_1.default.createElement(react_native_1.Text, { style: { color: "#ED1C23" } }, "Service number"))),
             react_1.default.createElement(react_native_1.TextInput, { style: {
                     height: 50,
                     margin: 12,
@@ -136,9 +150,9 @@ var login = function (props) {
                     setShowPassword(!showPassword);
                 } },
                 react_1.default.createElement(react_native_1.Text, null, showPassword ? "Show Password" : "Hide Password")),
-            isError && react_1.default.createElement(react_native_1.Text, { style: { color: 'red' } }, "Error occurred while submitting the form."),
-            successMessage && react_1.default.createElement(react_native_1.Text, { style: { color: 'green' } }, successMessage),
+            isError && (react_1.default.createElement(react_native_1.Text, { style: { color: "red" } }, "Error occurred while submitting the form.")),
+            successMessage && (react_1.default.createElement(react_native_1.Text, { style: { color: "green" } }, successMessage)),
             react_1.default.createElement(react_native_1.View, { style: { padding: 20 } },
-                react_1.default.createElement(ooredooButton_1.default, { ButtonName: isLoading ? 'Submitting...' : 'Login', disabled: isLoading, setOnPress: handleSubmit })))));
+                react_1.default.createElement(ooredooButton_1.default, { ButtonName: isLoading ? "Submitting..." : "Login", disabled: isLoading, setOnPress: handleSubmit })))));
 };
 exports.default = login;

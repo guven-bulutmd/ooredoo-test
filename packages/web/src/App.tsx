@@ -7,6 +7,7 @@ import StepThree from "common/dist/Register/stepThree";
 import AccountCreated from "common/dist/Register/accountCreated";
 import Login from "common/dist/Login/login";
 import Main from "common/dist/Main/main";
+import LoginServiceNumber from "common/dist/Login/loginServiceNumber";
 
 type Props = {};
 
@@ -64,6 +65,14 @@ const router = createBrowserRouter([
     element: (
       <div style={{ maxWidth: 400 ,margin:'auto'}}>
         <Login />
+      </div>
+    ),
+  },
+  {
+    path: "/loginServiceNumber",
+    element: (
+      <div style={{ maxWidth: 400 ,margin:'auto'}}>
+        <LoginServiceNumber />
       </div>
     ),
   },

@@ -8,10 +8,10 @@ var useCustomValidationLN = function () {
     var validateInput = function (value) {
         var validationErrors = [];
         if ((value === null || value === void 0 ? void 0 : value.length) !== 8) {
-            validationErrors.push("Mobile number must be 8 digits exactly");
+            validationErrors.push("Landline number must be 8 digits exactly");
         }
         if (!value.startsWith("4")) {
-            validationErrors.push("Mobile number needs to start with 3,5,6 or 7");
+            validationErrors.push("Landline number needs to start with 4");
         }
         if ((validationErrors === null || validationErrors === void 0 ? void 0 : validationErrors.length) === 0) {
             setIsValid(true);
